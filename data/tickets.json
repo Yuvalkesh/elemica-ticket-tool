@@ -1,11 +1,11 @@
 [
   {
     "id": "EDI-2147",
-    "subject": "947 X12 mapping — IDoc to 947 path drops IT1*ADJ for negative quantities",
+    "subject": "947 X12 mapping \u2014 IDoc to 947 path drops IT1*ADJ for negative quantities",
     "body": "Customer rolled their 947 X12 mapping live last week. Customer support flagged that downstream WMS is rejecting messages with reason code BD (damaged) because our IDoc-to-947 path is dropping the IT1*ADJ segment when source IDoc has MENGE < 0. Reproduces every time. Affects 3-5 messages/day for this customer. Need a fix that preserves IT1*ADJ for negative qty without breaking the positive path. Customer wants ETA by Thursday.",
     "category": "edi-mapping",
     "severity": "medium",
-    "reporter": "BA team — Customer Onboarding",
+    "reporter": "BA team \u2014 Customer Onboarding",
     "status": "open",
     "created": "2026-04-22T10:14:00Z"
   },
@@ -21,7 +21,7 @@
   },
   {
     "id": "SAP-ESC-3304",
-    "subject": "P1 — SAP S/4HANA → carrier integration intermittent failure during peak hours",
+    "subject": "P1 \u2014 SAP S/4HANA \u2192 carrier integration intermittent failure during peak hours",
     "body": "Customer reports SAP S/4HANA-driven shipment creations failing intermittently 14:00-18:00 CET. ~8% of shipments fail with timeout errors at the SAP Cloud Connector layer. Customer at 92.4% during peak vs contractual 99.5% SLA. Need root-cause statement and fix plan by EOD April 27. Cloud Connector v2.16.4. Carriers affected: FedEx, UPS, DHL EU.",
     "category": "escalation",
     "severity": "urgent",
@@ -31,27 +31,27 @@
   },
   {
     "id": "LOG-1188",
-    "subject": "Logistics microservice — RabbitMQ consumer memory leak",
+    "subject": "Logistics microservice \u2014 RabbitMQ consumer memory leak",
     "body": "Parcel-execution microservice (Java 1.8 + WebLogic) shows steady RSS growth in production over 72-hour windows. Suspect leak in the RabbitMQ consumer thread pool. Restart resolves; leak recurs. Want a heap dump analysis + a proper fix without a full WebLogic-to-Tomcat migration in scope.",
     "category": "legacy-deployment",
     "severity": "medium",
-    "reporter": "Engineering — Logistics",
+    "reporter": "Engineering \u2014 Logistics",
     "status": "in-progress",
     "created": "2026-04-21T13:55:00Z"
   },
   {
     "id": "IDX-742",
-    "subject": "Intelligent Document Extraction — accuracy drop on multi-page PO scans",
+    "subject": "Intelligent Document Extraction \u2014 accuracy drop on multi-page PO scans",
     "body": "Internal QA flagged that extraction accuracy on multi-page purchase orders dropped from 94% to 81% in the last release window. Single-page accuracy unaffected. Suspect a regression in the page-stitching step. Need a reproducer + fix; have a customer demo on May 5.",
     "category": "idx-extraction",
     "severity": "high",
-    "reporter": "Engineering Lead — IDX",
+    "reporter": "Engineering Lead \u2014 IDX",
     "status": "open",
     "created": "2026-04-24T11:20:00Z"
   },
   {
     "id": "MIG-0428",
-    "subject": "Supplier Portal SQL Server → PostgreSQL — schema drift in audit log",
+    "subject": "Supplier Portal SQL Server \u2192 PostgreSQL \u2014 schema drift in audit log",
     "body": "POC migration of Supplier Portal from SQL Server to PostgreSQL hit a wall on the audit_log table. Identity column behaviour differs (IDENTITY vs SERIAL/IDENTITY). Need a migration recipe that preserves existing audit_id values without gaps. Currently blocking the broader migration plan.",
     "category": "infra-cloud",
     "severity": "medium",
@@ -61,8 +61,8 @@
   },
   {
     "id": "CLD-3091",
-    "subject": "Cloud SRE — release report card automation",
-    "body": "Want to automate the end-of-release report card. Pull JIRA ticket counts by team, deploy success rate from CI, on-call paging counts, and SLO burn rate, into a single weekly report. Currently this is 4 hours of manual stitching every Friday. Same shape as the existing Jira→GitHub repo migration skill.",
+    "subject": "Cloud SRE \u2014 release report card automation",
+    "body": "Want to automate the end-of-release report card. Pull JIRA ticket counts by team, deploy success rate from CI, on-call paging counts, and SLO burn rate, into a single weekly report. Currently this is 4 hours of manual stitching every Friday. Same shape as the existing Jira\u2192GitHub repo migration skill.",
     "category": "infra-cloud",
     "severity": "low",
     "reporter": "VP Cloud Engineering",
@@ -81,17 +81,17 @@
   },
   {
     "id": "XCAR-9907",
-    "subject": "Customized xCarrier deployment — SSO token mismatch after upgrade",
+    "subject": "Customized xCarrier deployment \u2014 SSO token mismatch after upgrade",
     "body": "Customer's customized xCarrier instance fails SSO after the latest engine upgrade. Token issuer changed in the upstream config, but the customer-side IdP wasn't updated in sync. Need a verified rollback OR a fix to the IdP mapping. Production access required to verify.",
     "category": "xcarrier-change",
     "severity": "high",
-    "reporter": "PS Team — xCarrier",
+    "reporter": "PS Team \u2014 xCarrier",
     "status": "open",
     "created": "2026-04-25T17:22:00Z"
   },
   {
     "id": "EDI-2188",
-    "subject": "X12 850 — vendor sending non-standard ST segment, fails parser",
+    "subject": "X12 850 \u2014 vendor sending non-standard ST segment, fails parser",
     "body": "Vendor's X12 850 messages include an ST segment with a non-standard transaction set ID (0850 instead of 850). Our parser strict-mode rejects them. Vendor refuses to change. Need either a tolerant parsing mode OR a pre-processor that normalizes incoming envelopes before mapping.",
     "category": "edi-mapping",
     "severity": "low",

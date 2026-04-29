@@ -74,28 +74,18 @@ async function renderTicket() {
 
         <div class="ticket-body">${escapeHtml(t.body)}</div>
 
-        <h3 style="font-size:.78rem;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px">AI actions · workshop TODOs</h3>
+        <h3 style="font-size:.78rem;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px">AI actions</h3>
 
         <div class="todo-grid">
           <button class="todo-btn" data-action="triage">
             <div class="ic">🤖</div>
             <div class="name">AI Triage</div>
-            <div class="desc">Block 3 · classify + route + flag assumptions</div>
+            <div class="desc">Stage 4 · classify category, severity, target systems</div>
           </button>
-          <button class="todo-btn" data-action="pr-form">
-            <div class="ic">📋</div>
-            <div class="name">Generate PR Form</div>
-            <div class="desc">Lokesh / Vaibhav · bottom-up estimate</div>
-          </button>
-          <button class="todo-btn" data-action="similar">
-            <div class="ic">🔍</div>
-            <div class="name">Find Similar</div>
-            <div class="desc">Aman / Jeya / Trenton · semantic match</div>
-          </button>
-          <button class="todo-btn" data-action="reply">
-            <div class="ic">💬</div>
-            <div class="name">Draft Reply</div>
-            <div class="desc">Sloan's rule · verify gate baked in</div>
+          <button class="todo-btn pending" data-action="resolve" disabled title="You add this in Stage 5">
+            <div class="ic">🪄</div>
+            <div class="name">Draft Resolution</div>
+            <div class="desc">Stage 5 · steps + commands + client message · human approves</div>
           </button>
         </div>
 
@@ -112,17 +102,17 @@ async function renderTicket() {
           <div class="row"><span class="k">severity</span><span class="v">${t.severity}</span></div>
         </div>
         <div class="side-card">
-          <h3>Workshop hint</h3>
+          <h3>Workshop hint · Stage 4</h3>
           <p style="font-size:.84rem;color:var(--text);line-height:1.65">
-            Open Claude Code in your terminal and run:<br><br>
-            <code style="background:#0a0a12;padding:8px 10px;border-radius:6px;display:block;font-size:.75rem;color:var(--accent);font-family:'IBM Plex Mono',monospace">claude "open lib/triage.js and wire it up to call Anthropic's API. use the ticket as input and return the JSON shape from the comment."</code>
+            Open Claude Code in your terminal and paste the Stage 4 prompt from <code>workshop/stages.md</code>:<br><br>
+            <code style="background:#0a0a12;padding:8px 10px;border-radius:6px;display:block;font-size:.75rem;color:var(--accent);font-family:'IBM Plex Mono',monospace">claude "open lib/triage.js and replace the stub with a real Anthropic Messages API call. use the JSON shape from the comment block."</code>
           </p>
         </div>
       </aside>
     </div>
   `;
 
-  document.querySelectorAll(".todo-btn").forEach((btn) => {
+  document.querySelectorAll(".todo-btn:not([disabled])").forEach((btn) => {
     btn.addEventListener("click", () => runAction(btn, t.id, btn.dataset.action));
   });
 }
@@ -149,9 +139,7 @@ async function runAction(btn, id, action) {
 
 const labelForAction = (a) => ({
   "triage": "🤖 AI Triage",
-  "pr-form": "📋 Generate PR Form",
-  "similar": "🔍 Find Similar",
-  "reply": "💬 Draft Reply",
+  "resolve": "🪄 Draft Resolution",
 }[a] || a);
 
 // ─── /submit.html ────────────────────────────────────────────────────────────

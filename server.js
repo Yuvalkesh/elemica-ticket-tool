@@ -1,12 +1,10 @@
+import "dotenv/config";
 import express from "express";
 import { readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { triage } from "./lib/triage.js";
-import { generatePrForm } from "./lib/pr-form.js";
-import { findSimilar } from "./lib/similar.js";
-import { draftReply } from "./lib/reply.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_PATH = join(__dirname, "data", "tickets.json");
@@ -35,14 +33,14 @@ app.post("/api/tickets", async (req, res) => {
   const { subject, body, category = "unknown", severity = "medium", reporter = "self" } = req.body ?? {};
   if (!subject || !body) return res.status(400).json({ error: "subject and body are required" });
   const tickets = await loadTickets();
-  const id = `TKT-${String(Date.now()).slice(-6)}`;
+  const id = `MAN-${String(Date.now()).slice(-6)}`;
   const ticket = { id, subject, body, category, severity, reporter, status: "open", created: new Date().toISOString() };
   tickets.unshift(ticket);
   await saveTickets(tickets);
   res.status(201).json(ticket);
 });
 
-// ─── TODO endpoints — wired during the workshop ────────────────────────────
+// ─── Stage 4 · AI Triage (centerpiece) ─────────────────────────────────────
 app.post("/api/tickets/:id/triage", async (req, res) => {
   const tickets = await loadTickets();
   const ticket = tickets.find((x) => x.id === req.params.id);
@@ -51,29 +49,9 @@ app.post("/api/tickets/:id/triage", async (req, res) => {
   res.json(result);
 });
 
-app.post("/api/tickets/:id/pr-form", async (req, res) => {
-  const tickets = await loadTickets();
-  const ticket = tickets.find((x) => x.id === req.params.id);
-  if (!ticket) return res.status(404).json({ error: "ticket not found" });
-  const result = await generatePrForm(ticket);
-  res.json(result);
-});
-
-app.post("/api/tickets/:id/similar", async (req, res) => {
-  const tickets = await loadTickets();
-  const ticket = tickets.find((x) => x.id === req.params.id);
-  if (!ticket) return res.status(404).json({ error: "ticket not found" });
-  const result = await findSimilar(ticket, tickets);
-  res.json(result);
-});
-
-app.post("/api/tickets/:id/reply", async (req, res) => {
-  const tickets = await loadTickets();
-  const ticket = tickets.find((x) => x.id === req.params.id);
-  if (!ticket) return res.status(404).json({ error: "ticket not found" });
-  const result = await draftReply(ticket);
-  res.json(result);
-});
+// ─── Stage 5 · You add this route during the workshop ──────────────────────
+// POST /api/resolve  →  calls draftResolution(ticket, triage) from lib/resolve.js
+// (See workshop/stages.md · Stage 5 for the paste prompt.)
 
 // ─── boot ──────────────────────────────────────────────────────────────────
 const PORT = process.env.PORT || 3000;

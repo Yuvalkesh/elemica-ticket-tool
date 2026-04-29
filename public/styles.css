@@ -248,6 +248,19 @@ header{
 .todo-btn .desc{font-size:.74rem;color:var(--muted);font-weight:500}
 .todo-btn.loading{opacity:.6;pointer-events:none}
 .todo-btn.loading .desc::after{content:" · running…";color:var(--accent)}
+.todo-btn.pending,.todo-btn[disabled]{
+  opacity:.4;
+  cursor:not-allowed;
+  background:var(--bg-soft);
+  border-style:dashed;
+  border-color:var(--border);
+}
+.todo-btn.pending:hover,.todo-btn[disabled]:hover{
+  border-color:var(--border);
+  background:var(--bg-soft);
+  transform:none;
+}
+.todo-btn.pending .desc::after{content:" · you build this";color:var(--gold);font-weight:600}
 
 /* result panel */
 .result-panel{
