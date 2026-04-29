@@ -7,8 +7,10 @@ services:
     name: elemica-ticket-tool
     runtime: node
     plan: free                # 750 free instance hours / month
+    region: oregon
     buildCommand: npm install
     startCommand: npm start
+    healthCheckPath: /api/tickets
     autoDeploy: true          # redeploy on every push to main
     envVars:
       - key: NODE_VERSION
